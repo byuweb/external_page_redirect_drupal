@@ -86,8 +86,8 @@ function external_link_d7_node_info() {
       // Drupal would call mymodule_insert() or similar for node
       // hooks. In our case, the base is 'external_link_d7'.
       'base' => 'external_link_d7',
-      'description' => t('This is an example node type with a few fields.'),
-      'title_label' => t('Example Title'),
+      'description' => t('This is an external link page for content on the site that when viewed redirects to an external url.'),
+      'title_label' => t('Link Title'),
       // We'll set the 'locked' attribute to TRUE, so users won't be
       // able to change the machine name of our content type.
       'locked' => TRUE,
@@ -213,10 +213,10 @@ function external_link_d7_entity_info_alter(&$entity_info) {
  */
 function external_link_d7_field_formatter_info() {
   return array(
-    'external_link_d7_colors' => array(
-      'label' => t('Node Example Color Handle'),
-      'field types' => array('text'),
-    ),
+//    'external_link_d7_colors' => array(
+//      'label' => t('Node Example Color Handle'),
+//      'field types' => array('text'),
+//    ),
   );
 }
 
@@ -289,24 +289,161 @@ function theme_external_link_d7_color($variables) {
  */
 function _external_link_d7_installed_fields() {
   return array(
-    'external_link_d7_color' => array(
-      'field_name' => 'external_link_d7_color',
-      'cardinality' => 3,
-      'type'        => 'text',
-      'settings'    => array(
-        'max_length' => 60,
+      'body' => array(
+          'entity_types' => array(
+              0 => 'node',
+          ),
+          'translatable' => '0',
+          'settings' => array(),
+          'storage' => array(
+              'type' => 'field_sql_storage',
+              'settings' => array(),
+              'module' => 'field_sql_storage',
+              'active' => '1',
+              'details' => array(
+                  'sql' => array(
+                      'FIELD_LOAD_CURRENT' => array(
+                          'field_data_body' => array(
+                              'value' => 'body_value',
+                              'summary' => 'body_summary',
+                              'format' => 'body_format',
+                          ),
+                      ),
+                      'FIELD_LOAD_REVISION' => array(
+                          'field_revision_body' => array(
+                              'value' => 'body_value',
+                              'summary' => 'body_summary',
+                              'format' => 'body_format',
+                          ),
+                      ),
+                  ),
+              ),
+          ),
+          'foreign keys' => array(
+              'format' => array(
+                  'table' => 'filter_format',
+                  'columns' => array(
+                      'format' => 'format',
+                  ),
+              ),
+          ),
+          'indexes' => array(
+              'format' => array(
+                  0 => 'format',
+              ),
+          ),
+          'field_name' => 'body',
+          'type' => 'text_with_summary',
+          'module' => 'text',
+          'active' => '1',
+          'locked' => '0',
+          'cardinality' => '1',
+          'deleted' => '0',
+          'columns' => array(
+              'value' => array(
+                  'type' => 'text',
+                  'size' => 'big',
+                  'not null' => FALSE,
+              ),
+              'summary' => array(
+                  'type' => 'text',
+                  'size' => 'big',
+                  'not null' => FALSE,
+              ),
+              'format' => array(
+                  'type' => 'varchar',
+                  'length' => 255,
+                  'not null' => FALSE,
+              ),
+          ),
+          'bundles' => array(
+              'node' => array(
+                  0 => 'page',
+                  1 => 'article',
+                  2 => 'event_series',
+                  3 => 'external_link_d7',
+              ),
+          ),
+
+          'field_link' => array(
+              'translatable' => '0',
+              'entity_types' => array(),
+              'settings' => array(
+                  'attributes' => array(
+                      'target' => 'default',
+                      'class' => '',
+                      'rel' => '',
+                  ),
+                  'url' => 0,
+                  'title' => 'optional',
+                  'title_value' => '',
+                  'title_maxlength' => 128,
+                  'enable_tokens' => 1,
+                  'display' => array(
+                      'url_cutoff' => 80,
+                  ),
+              ),
+              'storage' => array(
+                  'type' => 'field_sql_storage',
+                  'settings' => array(),
+                  'module' => 'field_sql_storage',
+                  'active' => '1',
+                  'details' => array(
+                      'sql' => array(
+                          'FIELD_LOAD_CURRENT' => array(
+                              'field_data_field_link' => array(
+                                  'url' => 'field_link_url',
+                                  'title' => 'field_link_title',
+                                  'attributes' => 'field_link_attributes',
+                              ),
+                          ),
+                          'FIELD_LOAD_REVISION' => array(
+                              'field_revision_field_link' => array(
+                                  'url' => 'field_link_url',
+                                  'title' => 'field_link_title',
+                                  'attributes' => 'field_link_attributes',
+                              ),
+                          ),
+                      ),
+                  ),
+              ),
+              'foreign keys' => array(),
+              'indexes' => array(),
+              'field_name' => 'field_link',
+              'type' => 'link_field',
+              'module' => 'link',
+              'active' => '1',
+              'locked' => '0',
+              'cardinality' => '1',
+              'deleted' => '0',
+              'columns' => array(
+                  'url' => array(
+                      'type' => 'varchar',
+                      'length' => 2048,
+                      'not null' => FALSE,
+                      'sortable' => TRUE,
+                  ),
+                  'title' => array(
+                      'type' => 'varchar',
+                      'length' => 255,
+                      'not null' => FALSE,
+                      'sortable' => TRUE,
+                  ),
+                  'attributes' => array(
+                      'type' => 'text',
+                      'size' => 'medium',
+                      'not null' => FALSE,
+                  ),
+              ),
+              'bundles' => array(
+                  'node' => array(
+                      0 => 'external_link_d7',
+                  ),
+              ),
+          ),
+
       ),
-    ),
-    'external_link_d7_quantity' => array(
-      'field_name'  => 'external_link_d7_quantity',
-      'cardinality' => 1,
-      'type'        => 'text',
-    ),
-    'external_link_d7_image' => array(
-      'field_name' => 'external_link_d7_image',
-      'type'       => 'image',
-      'cardinality' => 1,
-    ),
+
   );
 }
 
@@ -327,48 +464,140 @@ function _external_link_d7_installed_fields() {
  */
 function _external_link_d7_installed_instances() {
   return array(
-    'external_link_d7_color' => array(
-      'field_name' => 'external_link_d7_color',
-      'label'       => t('The colors available for this object.'),
-      'widget'      => array(
-        'type'    => 'text_textfield',
+      'body' => array(
+          0 => array(
+              'label' => 'Link Description',
+              'widget' => array(
+                  'type' => 'text_textarea_with_summary',
+                  'settings' => array(
+                      'rows' => 20,
+                      'summary_rows' => 5,
+                  ),
+                  'weight' => '1',
+                  'module' => 'text',
+              ),
+              'settings' => array(
+                  'display_summary' => TRUE,
+                  'text_processing' => 1,
+                  'user_register_form' => FALSE,
+              ),
+              'display' => array(
+                  'default' => array(
+                      'label' => 'hidden',
+                      'type' => 'text_default',
+                      'weight' => '1',
+                      'settings' => array(),
+                      'module' => 'text',
+                  ),
+                  'teaser' => array(
+                      'label' => 'hidden',
+                      'type' => 'text_summary_or_trimmed',
+                      'settings' => array(
+                          'trim_length' => 600,
+                      ),
+                      'module' => 'text',
+                      'weight' => 1,
+                  ),
+                  'external_link_d7_list' => array(
+                      'label' => 'hidden',
+                      'type' => 'text_summary_or_trimmed',
+                      'settings' => array(
+                          'trim_length' => 600,
+                      ),
+                      'module' => 'text',
+                      'weight' => 1,
+                  ),
+                  'full' => array(
+                      'label' => 'hidden',
+                      'type' => 'hidden',
+                      'weight' => '1',
+                      'settings' => array(),
+                  ),
+              ),
+              'required' => FALSE,
+              'description' => '',
+              'field_name' => 'body',
+              'entity_type' => 'node',
+              'bundle' => 'external_link_d7',
+              'deleted' => '0',
+              'default_value' => NULL,
+          ),
       ),
-      'display' => array(
-        'external_link_d7_list' => array(
-          'label' => 'hidden',
-          'type' => 'external_link_d7_colors',
-        ),
+      'field_link' => array(
+          0 => array(
+              'label' => 'Link',
+              'widget' => array(
+                  'weight' => '31',
+                  'type' => 'link_field',
+                  'module' => 'link',
+                  'active' => 0,
+                  'settings' => array(),
+              ),
+              'settings' => array(
+                  'absolute_url' => 1,
+                  'validate_url' => 1,
+                  'url' => 0,
+                  'title' => 'none',
+                  'title_value' => '',
+                  'title_label_use_field_label' => 0,
+                  'title_maxlength' => '128',
+                  'enable_tokens' => 1,
+                  'display' => array(
+                      'url_cutoff' => '80',
+                  ),
+                  'attributes' => array(
+                      'target' => 'default',
+                      'rel' => '',
+                      'configurable_class' => 0,
+                      'class' => '',
+                      'configurable_title' => 0,
+                      'title' => '',
+                  ),
+                  'rel_remove' => 'default',
+                  'user_register_form' => FALSE,
+              ),
+              'display' => array(
+                  'default' => array(
+                      'label' => 'above',
+                      'type' => 'link_default',
+                      'settings' => array(),
+                      'module' => 'link',
+                      'weight' => 2,
+                  ),
+                  'full' => array(
+                      'label' => 'above',
+                      'type' => 'field_redirection',
+                      'weight' => '0',
+                      'settings' => array(
+                          'code' => '301',
+                          '404_if_empty' => FALSE,
+                          'page_restrictions' => 0,
+                          'pages' => '',
+                      ),
+                      'module' => 'field_redirection',
+                  ),
+                  'teaser' => array(
+                      'type' => 'hidden',
+                      'label' => 'above',
+                      'settings' => array(),
+                      'weight' => 0,
+                  ),
+                  'external_link_d7_list' => array(
+                      'type' => 'hidden',
+                      'label' => 'above',
+                      'settings' => array(),
+                      'weight' => 0,
+                  ),
+              ),
+              'required' => 1,
+              'description' => '',
+              'default_value' => NULL,
+              'field_name' => 'field_link',
+              'entity_type' => 'node',
+              'bundle' => 'external_link_d7',
+              'deleted' => '0',
+          ),
       ),
-    ),
-    'external_link_d7_quantity' => array(
-      'field_name'  => 'external_link_d7_quantity',
-      'label' => t('Quantity required'),
-      'type'        => 'text',
-      'widget'      => array(
-        'type'    => 'text_textfield',
-      ),
-      'display' => array(
-        'external_link_d7_list' => array(
-          'label' => 'hidden',
-          'type' => 'hidden',
-        ),
-      ),
-    ),
-    'external_link_d7_image' => array(
-      'field_name'  => 'external_link_d7_image',
-      'label'       => t('Upload an image:'),
-      'required'    => FALSE,
-      'widget' => array(
-        'type'    => 'image_image',
-        'weight'  => 2.10,
-      ),
-      'display' => array(
-        'external_link_d7_list' => array(
-          'label' => 'hidden',
-          'type' => 'image_link_content__thumbnail',
-        ),
-      ),
-    ),
   );
 }
 
