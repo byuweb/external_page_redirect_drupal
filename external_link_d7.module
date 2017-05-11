@@ -188,7 +188,7 @@ function external_link_d7_page() {
   // http://api.drupal.org/api/function/node_view/7
   foreach ($result as $row) {
     $node = node_load($row->nid);
-    $renderable_array['node_list'][] = node_view($node, 'external_link_d7_list');
+    $renderable_array['node_list'][] = node_view($node, 'full');
   }
   return $renderable_array;
 }
@@ -201,10 +201,10 @@ function external_link_d7_page() {
  */
 function external_link_d7_entity_info_alter(&$entity_info) {
   // Add our new view mode to the list of view modes...
-  $entity_info['node']['view modes']['external_link_d7_list'] = array(
-    'label' => t('External Link List'),
-    'custom settings' => TRUE,
-  );
+//  $entity_info['node']['view modes']['external_link_d7_list'] = array(
+//    'label' => t('External Link List'),
+//    'custom settings' => TRUE,
+//  );
 }
 
 
@@ -228,15 +228,15 @@ function external_link_d7_field_formatter_info() {
  */
 function external_link_d7_field_formatter_view($object_type, $object, $field, $instance, $langcode, $items, $display) {
   $element = array();
-  switch ($display['type']) {
-    case 'external_link_d7_colors':
-//      foreach ($items as $delta => $item) {
-//        $element[$delta]['#type'] = 'markup';
-//        $color = $item['safe_value'];
-//        $element[$delta]['#markup'] = theme('external_link_d7_color', array('color' => $color));
-//      }
-      break;
-  }
+//  switch ($display['type']) {
+//    case 'external_link_d7_colors':
+////      foreach ($items as $delta => $item) {
+////        $element[$delta]['#type'] = 'markup';
+////        $color = $item['safe_value'];
+////        $element[$delta]['#markup'] = theme('external_link_d7_color', array('color' => $color));
+////      }
+//      break;
+//  }
 
   return $element;
 }
