@@ -298,7 +298,7 @@ function _external_link_d7_installed_fields() {
                     'class' => '',
                     'rel' => '',
                 ),
-                'url' => 0,
+                'url' => 1,
                 'title' => 'optional',
                 'title_value' => '',
                 'title_maxlength' => 128,
@@ -394,7 +394,7 @@ function _external_link_d7_installed_instances() {
           'settings' => array(
               'absolute_url' => 1,
               'validate_url' => 1,
-              'url' => 0,
+              'url' => 1,
               'title' => 'none',
               'title_value' => '',
               'title_label_use_field_label' => 0,
