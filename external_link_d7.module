@@ -230,11 +230,11 @@ function external_link_d7_field_formatter_view($object_type, $object, $field, $i
   $element = array();
   switch ($display['type']) {
     case 'external_link_d7_colors':
-      foreach ($items as $delta => $item) {
-        $element[$delta]['#type'] = 'markup';
-        $color = $item['safe_value'];
-        $element[$delta]['#markup'] = theme('external_link_d7_color', array('color' => $color));
-      }
+//      foreach ($items as $delta => $item) {
+//        $element[$delta]['#type'] = 'markup';
+//        $color = $item['safe_value'];
+//        $element[$delta]['#markup'] = theme('external_link_d7_color', array('color' => $color));
+//      }
       break;
   }
 
@@ -246,13 +246,13 @@ function external_link_d7_field_formatter_view($object_type, $object, $field, $i
  *
  * This lets us tell Drupal about our theme functions and their arguments.
  */
-function external_link_d7_theme($existing, $type, $theme, $path) {
-  return array(
-    'external_link_d7_color' => array(
-      'variables' => array('color' => NULL),
-    ),
-  );
-}
+//function external_link_d7_theme($existing, $type, $theme, $path) {
+//  return array(
+//    'external_link_d7_color' => array(
+//      'variables' => array('color' => NULL),
+//    ),
+//  );
+//}
 
 /**
  * Implements hook_help().
@@ -288,163 +288,80 @@ function theme_external_link_d7_color($variables) {
  *   new node type.
  */
 function _external_link_d7_installed_fields() {
-  return array(
-      'body' => array(
-          'entity_types' => array(
-              0 => 'node',
-          ),
-          'translatable' => '0',
-          'settings' => array(),
-          'storage' => array(
-              'type' => 'field_sql_storage',
-              'settings' => array(),
-              'module' => 'field_sql_storage',
-              'active' => '1',
-              'details' => array(
-                  'sql' => array(
-                      'FIELD_LOAD_CURRENT' => array(
-                          'field_data_body' => array(
-                              'value' => 'body_value',
-                              'summary' => 'body_summary',
-                              'format' => 'body_format',
-                          ),
-                      ),
-                      'FIELD_LOAD_REVISION' => array(
-                          'field_revision_body' => array(
-                              'value' => 'body_value',
-                              'summary' => 'body_summary',
-                              'format' => 'body_format',
-                          ),
-                      ),
-                  ),
-              ),
-          ),
-          'foreign keys' => array(
-              'format' => array(
-                  'table' => 'filter_format',
-                  'columns' => array(
-                      'format' => 'format',
-                  ),
-              ),
-          ),
-          'indexes' => array(
-              'format' => array(
-                  0 => 'format',
-              ),
-          ),
-          'field_name' => 'body',
-          'type' => 'text_with_summary',
-          'module' => 'text',
-          'active' => '1',
-          'locked' => '0',
-          'cardinality' => '1',
-          'deleted' => '0',
-          'columns' => array(
-              'value' => array(
-                  'type' => 'text',
-                  'size' => 'big',
-                  'not null' => FALSE,
-              ),
-              'summary' => array(
-                  'type' => 'text',
-                  'size' => 'big',
-                  'not null' => FALSE,
-              ),
-              'format' => array(
-                  'type' => 'varchar',
-                  'length' => 255,
-                  'not null' => FALSE,
-              ),
-          ),
-          'bundles' => array(
-              'node' => array(
-                  0 => 'page',
-                  1 => 'article',
-                  2 => 'event_series',
-                  3 => 'external_link_d7',
-              ),
-          ),
+    return array(
+        'field_link' => array(
+            'translatable' => '0',
+            'entity_types' => array(),
+            'settings' => array(
+                'attributes' => array(
+                    'target' => 'default',
+                    'class' => '',
+                    'rel' => '',
+                ),
+                'url' => 0,
+                'title' => 'optional',
+                'title_value' => '',
+                'title_maxlength' => 128,
+                'enable_tokens' => 1,
+                'display' => array(
+                    'url_cutoff' => 80,
+                ),
+            ),
+            'storage' => array(
+                'type' => 'field_sql_storage',
+                'settings' => array(),
+                'module' => 'field_sql_storage',
+                'active' => '1',
+                'details' => array(
+                    'sql' => array(
+                        'FIELD_LOAD_CURRENT' => array(
+                            'field_data_field_link' => array(
+                                'url' => 'field_link_url',
+                                'title' => 'field_link_title',
+                                'attributes' => 'field_link_attributes',
+                            ),
+                        ),
+                        'FIELD_LOAD_REVISION' => array(
+                            'field_revision_field_link' => array(
+                                'url' => 'field_link_url',
+                                'title' => 'field_link_title',
+                                'attributes' => 'field_link_attributes',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'foreign keys' => array(),
+            'indexes' => array(),
+            'field_name' => 'field_link',
+            'type' => 'link_field',
+            'module' => 'link',
+            'active' => '1',
+            'locked' => '0',
+            'cardinality' => '1',
+            'deleted' => '0',
+            'columns' => array(
+                'url' => array(
+                    'type' => 'varchar',
+                    'length' => 2048,
+                    'not null' => FALSE,
+                    'sortable' => TRUE,
+                ),
+                'title' => array(
+                    'type' => 'varchar',
+                    'length' => 255,
+                    'not null' => FALSE,
+                    'sortable' => TRUE,
+                ),
+                'attributes' => array(
+                    'type' => 'text',
+                    'size' => 'medium',
+                    'not null' => FALSE,
+                ),
+            ),
+        )
+    );
 
-          'field_link' => array(
-              'translatable' => '0',
-              'entity_types' => array(),
-              'settings' => array(
-                  'attributes' => array(
-                      'target' => 'default',
-                      'class' => '',
-                      'rel' => '',
-                  ),
-                  'url' => 0,
-                  'title' => 'optional',
-                  'title_value' => '',
-                  'title_maxlength' => 128,
-                  'enable_tokens' => 1,
-                  'display' => array(
-                      'url_cutoff' => 80,
-                  ),
-              ),
-              'storage' => array(
-                  'type' => 'field_sql_storage',
-                  'settings' => array(),
-                  'module' => 'field_sql_storage',
-                  'active' => '1',
-                  'details' => array(
-                      'sql' => array(
-                          'FIELD_LOAD_CURRENT' => array(
-                              'field_data_field_link' => array(
-                                  'url' => 'field_link_url',
-                                  'title' => 'field_link_title',
-                                  'attributes' => 'field_link_attributes',
-                              ),
-                          ),
-                          'FIELD_LOAD_REVISION' => array(
-                              'field_revision_field_link' => array(
-                                  'url' => 'field_link_url',
-                                  'title' => 'field_link_title',
-                                  'attributes' => 'field_link_attributes',
-                              ),
-                          ),
-                      ),
-                  ),
-              ),
-              'foreign keys' => array(),
-              'indexes' => array(),
-              'field_name' => 'field_link',
-              'type' => 'link_field',
-              'module' => 'link',
-              'active' => '1',
-              'locked' => '0',
-              'cardinality' => '1',
-              'deleted' => '0',
-              'columns' => array(
-                  'url' => array(
-                      'type' => 'varchar',
-                      'length' => 2048,
-                      'not null' => FALSE,
-                      'sortable' => TRUE,
-                  ),
-                  'title' => array(
-                      'type' => 'varchar',
-                      'length' => 255,
-                      'not null' => FALSE,
-                      'sortable' => TRUE,
-                  ),
-                  'attributes' => array(
-                      'type' => 'text',
-                      'size' => 'medium',
-                      'not null' => FALSE,
-                  ),
-              ),
-              'bundles' => array(
-                  'node' => array(
-                      0 => 'external_link_d7',
-                  ),
-              ),
-          ),
-
-      ),
-
-  );
 }
 
 /**
@@ -464,65 +381,6 @@ function _external_link_d7_installed_fields() {
  */
 function _external_link_d7_installed_instances() {
   return array(
-      'body' => array(
-          0 => array(
-              'label' => 'Link Description',
-              'widget' => array(
-                  'type' => 'text_textarea_with_summary',
-                  'settings' => array(
-                      'rows' => 20,
-                      'summary_rows' => 5,
-                  ),
-                  'weight' => '1',
-                  'module' => 'text',
-              ),
-              'settings' => array(
-                  'display_summary' => TRUE,
-                  'text_processing' => 1,
-                  'user_register_form' => FALSE,
-              ),
-              'display' => array(
-                  'default' => array(
-                      'label' => 'hidden',
-                      'type' => 'text_default',
-                      'weight' => '1',
-                      'settings' => array(),
-                      'module' => 'text',
-                  ),
-                  'teaser' => array(
-                      'label' => 'hidden',
-                      'type' => 'text_summary_or_trimmed',
-                      'settings' => array(
-                          'trim_length' => 600,
-                      ),
-                      'module' => 'text',
-                      'weight' => 1,
-                  ),
-                  'external_link_d7_list' => array(
-                      'label' => 'hidden',
-                      'type' => 'text_summary_or_trimmed',
-                      'settings' => array(
-                          'trim_length' => 600,
-                      ),
-                      'module' => 'text',
-                      'weight' => 1,
-                  ),
-                  'full' => array(
-                      'label' => 'hidden',
-                      'type' => 'hidden',
-                      'weight' => '1',
-                      'settings' => array(),
-                  ),
-              ),
-              'required' => FALSE,
-              'description' => '',
-              'field_name' => 'body',
-              'entity_type' => 'node',
-              'bundle' => 'external_link_d7',
-              'deleted' => '0',
-              'default_value' => NULL,
-          ),
-      ),
       'field_link' => array(
           0 => array(
               'label' => 'Link',
