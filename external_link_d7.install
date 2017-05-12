@@ -4,7 +4,7 @@
 */
 function external_link_d7_install() {
 node_types_rebuild();
-$types = node_type_get_types();|
+$types = node_type_get_types();
 node_add_body_field($types['external_link_d7']);
 }
 
