@@ -25,3 +25,22 @@ https://www.drupal.org/project/field_redirection
 TO USE
 ------------------
 
+You will see the content type has been created.
+
+1. Add a field of type link. You only need to worry about the url, not link title.
+
+
+2. Follow Instructions for creating the link and display settings as the Field Redirection module states:
+https://www.drupal.org/project/field_redirection
+
+(Coming Soon: We will try to finish the module so you don't have to do these steps in the future.)
+
+* Go to the "Manage Display" tab on the settings page for the entity of choice (user, content type, etc) settings page; for example, to work with the content type "redirect_user", go to the URL: http://example.com/admin/structure/types/manage/redirect_user/display (where "example.com" is your site's hostname).
+* Expand the "Custom display settings" fieldset and ensure the "Full content" checkbox is checked.
+* Click the "Save" button.
+* Go to the "Full Content" tab.
+* Ensure that all of the fields are hidden except for the field you wish to use.
+* Click the selector in the Format column of the field in question.
+* Select the HTTP status code to use for the redirect - see below, though 301 is usually the best option.
+* Click the "Save" button.
+* Ensure that other display modes do not use the redirect.
