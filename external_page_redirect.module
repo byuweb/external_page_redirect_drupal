@@ -8,7 +8,7 @@
  */
 
 /**
- * @defgroup external_link_d7 Example: Node
+ * @defgroup external_page_redirect Example: Node
  * @ingroup examples
  * @{
  * Example defining a node type in code.
@@ -47,7 +47,7 @@
  * In previous versions of Drupal, "teaser" and "page" were node view modes.
  * In Drupal 7 we can define custom view modes to let the node know how it
  * should return it's data.  This module declares a custom view mode called
- * "external_link_d7_list".
+ * "external_page_redirect_list".
  *
  * Consult the @link http://drupal.org/node/707832 Field API Tutorial @endlink
  * and @link http://drupal.org/node/443536 Field API Handbook Page @endlink
@@ -60,11 +60,11 @@
  * Implements hook_menu().
  *
  * We are providing a default page to illustrate the use of our custom node view
- * mode that will live at http://example.com/?q=examples/external_link_d7
+ * mode that will live at http://example.com/?q=examples/external_page_redirect
  */
-function external_link_d7_menu() {
-  $items['examples/external_link_d7'] = array(
-    'page callback' => 'external_link_d7_page',
+function external_page_redirect_menu() {
+  $items['examples/external_page_redirect'] = array(
+    'page callback' => 'external_page_redirect_page',
     'access arguments' => array('access content'),
     'title' => 'Node Example',
   );
@@ -76,16 +76,16 @@ function external_link_d7_menu() {
  *
  * We use hook_node_info() to define our node content type.
  */
-function external_link_d7_node_info() {
+function external_page_redirect_node_info() {
   // We define the node type as an associative array.
   return array(
-    'external_link_d7' => array(
+    'external_page_redirect' => array(
       'name' => t('External Link Page'),
       // 'base' tells Drupal the base string for hook functions.
       // This is often the module name; if base is set to 'mymodule',
       // Drupal would call mymodule_insert() or similar for node
-      // hooks. In our case, the base is 'external_link_d7'.
-      'base' => 'external_link_d7',
+      // hooks. In our case, the base is 'external_page_redirect'.
+      'base' => 'external_page_redirect',
       'description' => t('This is an external link page for content on the site that when viewed redirects to an external url.'),
       'has_title' => TRUE,
       'title_label' => t('Link Title'),
@@ -106,7 +106,7 @@ function external_link_d7_node_info() {
  * You can get fancy with this form, or you can just punt
  * and return the default form that node_content will provide.
  */
-function external_link_d7_form($node, $form_state) {
+function external_page_redirect_form($node, $form_state) {
   return node_content_form($node, $form_state);
 }
 
@@ -120,9 +120,9 @@ function external_link_d7_form($node, $form_state) {
  *
  * @see node_load()
  * @see node_view()
- * @see external_link_d7_field_formatter_view()
+ * @see external_page_redirect_field_formatter_view()
  */
-function external_link_d7_page() {
+function external_page_redirect_page() {
   // We'll start building a renderable array that will be our page.
   // For now we just declare the array.
   $renderable_array = array();
@@ -130,15 +130,15 @@ function external_link_d7_page() {
   $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.status = :status';
   $result = db_query($sql,
     array(
-      ':type' => 'external_link_d7',
+      ':type' => 'external_page_redirect',
       ':status' => 1,
     )
   );
   $renderable_array['explanation'] = array(
-    '#markup' => t("External Link nodes you've created will be displayed here. Note that the color fields will be displayed differently in this list, than if you view the node normally. Click on the node title to see the difference. This is a result of using our 'external_link_d7_list' node view type."),
+    '#markup' => t("External Link nodes you've created will be displayed here. Note that the color fields will be displayed differently in this list, than if you view the node normally. Click on the node title to see the difference. This is a result of using our 'external_page_redirect_list' node view type."),
   );
-  // Loop through each of our external_link_d7 nodes and instruct node_view
-  // to use our "external_link_d7_list" view.
+  // Loop through each of our external_page_redirect nodes and instruct node_view
+  // to use our "external_page_redirect_list" view.
   // http://api.drupal.org/api/function/node_load/7
   // http://api.drupal.org/api/function/node_view/7
   foreach ($result as $row) {
@@ -154,9 +154,9 @@ function external_link_d7_page() {
  * We need to modify the default node entity info by adding a new view mode to
  * be used in functions like node_view() or node_build_content().
  */
-function external_link_d7_entity_info_alter(&$entity_info) {
+function external_page_redirect_entity_info_alter(&$entity_info) {
   // Add our new view mode to the list of view modes...
-//  $entity_info['node']['view modes']['external_link_d7_list'] = array(
+//  $entity_info['node']['view modes']['external_page_redirect_list'] = array(
 //    'label' => t('External Link List'),
 //    'custom settings' => TRUE,
 //  );
@@ -166,9 +166,9 @@ function external_link_d7_entity_info_alter(&$entity_info) {
 /**
  * Implements hook_field_formatter_info().
  */
-function external_link_d7_field_formatter_info() {
+function external_page_redirect_field_formatter_info() {
   return array(
-//    'external_link_d7_colors' => array(
+//    'external_page_redirect_colors' => array(
 //      'label' => t('Node Example Color Handle'),
 //      'field types' => array('text'),
 //    ),
@@ -181,14 +181,14 @@ function external_link_d7_field_formatter_info() {
  * @todo: We need to provide a formatter for the colors that a user is allowed
  * to enter during node creation.
  */
-function external_link_d7_field_formatter_view($object_type, $object, $field, $instance, $langcode, $items, $display) {
+function external_page_redirect_field_formatter_view($object_type, $object, $field, $instance, $langcode, $items, $display) {
   $element = array();
 //  switch ($display['type']) {
-//    case 'external_link_d7_colors':
+//    case 'external_page_redirect_colors':
 ////      foreach ($items as $delta => $item) {
 ////        $element[$delta]['#type'] = 'markup';
 ////        $color = $item['safe_value'];
-////        $element[$delta]['#markup'] = theme('external_link_d7_color', array('color' => $color));
+////        $element[$delta]['#markup'] = theme('external_page_redirect_color', array('color' => $color));
 ////      }
 //      break;
 //  }
@@ -201,9 +201,9 @@ function external_link_d7_field_formatter_view($object_type, $object, $field, $i
  *
  * This lets us tell Drupal about our theme functions and their arguments.
  */
-//function external_link_d7_theme($existing, $type, $theme, $path) {
+//function external_page_redirect_theme($existing, $type, $theme, $path) {
 //  return array(
-//    'external_link_d7_color' => array(
+//    'external_page_redirect_color' => array(
 //      'variables' => array('color' => NULL),
 //    ),
 //  );
@@ -212,9 +212,9 @@ function external_link_d7_field_formatter_view($object_type, $object, $field, $i
 /**
  * Implements hook_help().
  */
-function external_link_d7_help($path, $arg) {
+function external_page_redirect_help($path, $arg) {
   switch ($path) {
-    case 'admin/structure/external_link_d7':
+    case 'admin/structure/external_page_redirect':
       return "<p>" . t("The Node Example module provides a custom node type.
         You can create new Example Node nodes using the <a href='!nodeadd'>node add form</a>.",
         array('!nodeadd' => url('node/add/external-link'))) . "</p>";
@@ -222,5 +222,5 @@ function external_link_d7_help($path, $arg) {
 }
 
 /**
- * @} End of "defgroup external_link_d7".
+ * @} End of "defgroup external_page_redirect".
  */

@@ -1,4 +1,4 @@
-# external_link_d7
+# external_page_redirect
 Drupal 7 theme to create pages that are content but redirect immediately to external links.
 
 

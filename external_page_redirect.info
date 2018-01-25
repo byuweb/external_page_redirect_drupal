@@ -10,7 +10,7 @@ dependencies[] = drupal:image
 ; least that version of core.
 dependencies[] = drupal:system (>= 7.40)
 dependencies[] = field_redirection
-files[] = external_link_d7.test
+files[] = external_page_redirect.test
 
 ; Information added by Drupal.org packaging script on 2017-01-10
 ;version = "7.x-1.x-dev"

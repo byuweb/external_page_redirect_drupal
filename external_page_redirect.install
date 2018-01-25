@@ -2,18 +2,18 @@
 /**
 * Implements hook_install().
 */
-function external_link_d7_install() {
+function external_page_redirect_install() {
 node_types_rebuild();
 //$types = node_type_get_types();
-//node_add_body_field($types['external_link_d7']);
+//node_add_body_field($types['external_page_redirect']);
     add_custom_fields();
 }
 
 /**
 * Implements hook_uninstall().
 */
-function external_link_d7_uninstall() {
-$ournewtype = 'external_link_d7';
+function external_page_redirect_uninstall() {
+$ournewtype = 'external_page_redirect';
 $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
 $result = db_query($sql, array(':type' => $ournewtype));
 $nodeids = array();
@@ -35,7 +35,7 @@ node_type_delete($ournewtype);
  *   An associative array specifying the fields we wish to add to our
  *   new node type.
  */
-function _external_link_d7_installed_fields() {
+function _external_page_redirect_installed_fields() {
     return array(
         'field_link' => array(
             'translatable' => '0',
@@ -117,7 +117,7 @@ function _external_link_d7_installed_fields() {
  *
  * The instance lets Drupal know which widget to use to allow the user to enter
  * data and how to react in different view modes.  We are going to display a
- * page that uses a custom "external_link_d7_list" view mode.  We will set a
+ * page that uses a custom "external_page_redirect_list" view mode.  We will set a
  * cardinality of three allowing our content type to give the user three color
  * fields.
  *
@@ -127,7 +127,7 @@ function _external_link_d7_installed_fields() {
  *   An associative array specifying the instances we wish to add to our new
  *   node type.
  */
-function _external_link_d7_installed_instances() {
+function _external_page_redirect_installed_instances() {
     return array(
         'field_link' => array(
 
@@ -188,7 +188,7 @@ function _external_link_d7_installed_instances() {
                     'settings' => array(),
                     'weight' => 0,
                 ),
-                'external_link_d7_list' => array(
+                'external_page_redirect_list' => array(
                     'type' => 'hidden',
                     'label' => 'above',
                     'settings' => array(),
@@ -200,7 +200,7 @@ function _external_link_d7_installed_instances() {
             'default_value' => NULL,
             'field_name' => 'field_link',
             'entity_type' => 'node',
-            'bundle' => 'external_link_d7',
+            'bundle' => 'external_page_redirect',
             'deleted' => '0',
 
         ),
@@ -222,8 +222,8 @@ function _external_link_d7_installed_instances() {
  * we have to make sure we're only modifying the type we're
  * concerned with.
  */
-//function external_link_d7_node_type_insert($content_type) {
-//    if ($content_type->type == 'external_link_d7') {
+//function external_page_redirect_node_type_insert($content_type) {
+//    if ($content_type->type == 'external_page_redirect') {
 //        // First we add the body field. Node API helpfully gives us
 //        // node_add_body_field().
 //        // We'll set the body label now, although we could also set
@@ -231,9 +231,9 @@ function _external_link_d7_installed_instances() {
 //
 ////        $body_instance = node_add_body_field($content_type, t('Link Description'));
 //
-//        // Add our external_link_d7_list view mode to the body instance
+//        // Add our external_page_redirect_list view mode to the body instance
 //        // display by instructing the body to display as a summary.
-////        $body_instance['display']['external_link_d7_list'] = array(
+////        $body_instance['display']['external_page_redirect_list'] = array(
 ////            'label' => 'hidden',
 ////            'type' => 'text_summary_or_trimmed',
 ////        );
@@ -242,28 +242,28 @@ function _external_link_d7_installed_instances() {
 ////        field_update_instance($body_instance);
 //
 //        // Create all the fields we are adding to our content type.
-//        foreach (_external_link_d7_installed_fields() as $field) {
+//        foreach (_external_page_redirect_installed_fields() as $field) {
 //            field_create_field($field);
 //        }
 //
 //        // Create all the instances for our fields.
-//        foreach (_external_link_d7_installed_instances() as $instance) {
+//        foreach (_external_page_redirect_installed_instances() as $instance) {
 //            $instance['entity_type'] = 'node';
-//            $instance['bundle'] = 'external_link_d7';
+//            $instance['bundle'] = 'external_page_redirect';
 //            field_create_instance($instance);
 //        }
 //    }
 //}
 
 function add_custom_fields() {
-    foreach (_external_link_d7_installed_fields() as $field) {
+    foreach (_external_page_redirect_installed_fields() as $field) {
         field_create_field($field);
     }
 
     // Create all the instances for our fields.
-    foreach (_external_link_d7_installed_instances() as $instance) {
+    foreach (_external_page_redirect_installed_instances() as $instance) {
         $instance['entity_type'] = 'node';
-        $instance['bundle'] = 'external_link_d7';
+        $instance['bundle'] = 'external_page_redirect';
         field_create_instance($instance);
     }
 }
